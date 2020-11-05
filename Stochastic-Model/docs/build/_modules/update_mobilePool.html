@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>update_mobilePool &mdash; E-LTP AMPAR-Model 31.10.2020 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> E-LTP AMPAR-Model
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">E-LTP AMPAR-Model</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>update_mobilePool</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for update_mobilePool</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Tue Nov  3 09:47:09 2020</span>
+
+<span class="sd">@author: Moritz</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="update_mobilePool"><a class="viewcode-back" href="../index.html#update_mobilePool.update_mobilePool">[docs]</a><span class="k">def</span> <span class="nf">update_mobilePool</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="n">pin</span><span class="p">,</span><span class="n">pout</span><span class="p">,</span><span class="n">dBoff</span><span class="p">,</span><span class="n">dBon</span><span class="p">,</span> <span class="n">U_bleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pin_bleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pout_bleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">dBoff_bleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">dBon_bleached</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Returns the updated PSD Matrix and the corresponding number of receptors that got bound and unbound of the two types &quot;basal&quot; and &quot;bleached&quot;.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    U : array_like</span>
+<span class="sd">        Matrix containing binding probabilities for the type &quot;basal&quot;.</span>
+<span class="sd">    U_bleached : array_like</span>
+<span class="sd">        Matrix containing unbinding probabilities for the type &quot;basal&quot;.</span>
+<span class="sd">    pin : float</span>
+<span class="sd">    pout : float</span>
+<span class="sd">    pin_bleached : float</span>
+<span class="sd">    pout_bleached : float</span>
+<span class="sd">    dBoff : float</span>
+<span class="sd">    dBon : float</span>
+<span class="sd">    dBoff_bleached : float</span>
+<span class="sd">    dBon_bleached : float</span>
+<span class="sd">        </span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out: float, float</span>
+<span class="sd">        U, U_bleached.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span><span class="o">&lt;</span><span class="n">pin</span><span class="p">:</span>
+        <span class="n">U</span><span class="o">+=</span><span class="mi">1</span>
+    
+    <span class="k">if</span> <span class="n">U_bleached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span><span class="o">&lt;</span><span class="n">pin_bleached</span><span class="p">:</span>
+            <span class="n">U_bleached</span><span class="o">+=</span><span class="mi">1</span>
+        
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span><span class="o">&lt;</span><span class="n">pout</span><span class="p">:</span>
+        <span class="n">U</span><span class="o">-=</span><span class="mi">1</span>
+    
+    <span class="k">if</span> <span class="n">U_bleached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span><span class="o">&lt;</span><span class="n">pout_bleached</span><span class="p">:</span>
+            <span class="n">U_bleached</span><span class="o">-=</span><span class="mi">1</span>
+
+    <span class="n">DeltaB</span><span class="o">=</span><span class="n">dBoff</span><span class="o">-</span><span class="n">dBon</span>
+    <span class="n">U</span><span class="o">+=</span><span class="n">DeltaB</span>
+
+    <span class="k">if</span> <span class="n">U_bleached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">DeltaB_bleached</span><span class="o">=</span><span class="n">dBoff_bleached</span><span class="o">-</span><span class="n">dBon_bleached</span>
+        <span class="n">U_bleached</span><span class="o">+=</span><span class="n">DeltaB_bleached</span>
+
+    <span class="k">if</span> <span class="n">U_bleached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">U</span><span class="p">,</span> <span class="n">U_bleached</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">U</span></div>
+        
+        
+    <span class="c1"># Rout=np.random.rand(len(U))</span>
+    <span class="c1"># U[Rout&lt;pout]=0</span>
+    <span class="c1"># U[Rout&lt;pout_bleached]=0</span>
+
+    <span class="c1"># if np.random.rand()&lt;pin:</span>
+    <span class="c1">#     ii=np.where(U==0)</span>
+    <span class="c1">#     U[ii[0][0]]=1</span>
+
+    <span class="c1"># if np.random.rand()&lt;pin_bleached:</span>
+    <span class="c1">#     ii=np.where(U==0)</span>
+    <span class="c1">#     U[ii[0][0]]=2</span>
+        
+        
+    <span class="c1"># DeltaB=dBoff-dBon</span>
+    <span class="c1"># if DeltaB&gt;0:</span>
+    <span class="c1">#     ii=np.where(U==0)</span>
+    <span class="c1">#     U[ii[0][0:abs(DeltaB)]]=ID_basal</span>
+    <span class="c1"># if DeltaB&lt;0:</span>
+    <span class="c1">#     ii=np.where(U==ID_basal)</span>
+    <span class="c1">#     U[ii[0][0:abs(DeltaB)]]=0</span>
+
+
+    <span class="c1"># DeltaB_bleached=dBoff_bleached-dBon_bleached</span>
+    <span class="c1"># if DeltaB_bleached&gt;0:</span>
+    <span class="c1">#     ii=np.where(U==0)</span>
+    <span class="c1">#     U[ii[0][0:abs(DeltaB_bleached)]]=ID_bleached</span>
+    <span class="c1"># if DeltaB_bleached&lt;0:</span>
+    <span class="c1">#     ii=np.where(U==ID_bleached)</span>
+    <span class="c1">#     U[ii[0][0:abs(DeltaB_bleached)]]=0</span>
+
+
+
+
+    <span class="c1">#pout=kout*(U==1)*A_basal_0/A_basal*dt</span>
+    <span class="c1">#pout_bleached=kout*A_basal_0/A_basal*(U==2)*dt</span>
+    <span class="c1">#pin=kin_prime*UFP*dt</span>
+    <span class="c1">#pin_bleached=kin_prime*UFP_bleached*dt</span>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Moritz F P Becker
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
