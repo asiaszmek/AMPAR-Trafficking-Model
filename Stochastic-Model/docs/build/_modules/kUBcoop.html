@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kUBcoop &mdash; E-LTP AMPAR-Model 31.10.2020 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> E-LTP AMPAR-Model
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">E-LTP AMPAR-Model</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>kUBcoop</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kUBcoop</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Sun Nov  1 13:27:43 2020</span>
+
+<span class="sd">@author: Moritz</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">nearestNeighbours</span> <span class="kn">import</span> <span class="n">nearestNeighbours</span>
+
+<div class="viewcode-block" id="kUBcoop"><a class="viewcode-back" href="../index.html#kUBcoop.kUBcoop">[docs]</a><span class="k">def</span> <span class="nf">kUBcoop</span><span class="p">(</span><span class="n">kUB</span><span class="p">,</span> <span class="n">NN</span><span class="p">,</span> <span class="n">PSD</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;Returns the cooperative binding rate per mobile receptor.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kUB : float</span>
+<span class="sd">        binding rate</span>
+<span class="sd">    alpha : float, optional</span>
+<span class="sd">        By default alpha=16. Factor by which the fraction of occupied nearest neighbours increases the binding rate.</span>
+<span class="sd">    NN : array_like</span>
+<span class="sd">        Matrix that contains the number of nearest neighbours for each grid element.</span>
+<span class="sd">    PSD : array_like</span>
+<span class="sd">        Matrix representing the PSD grid</span>
+<span class="sd">        </span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out: array_like</span>
+<span class="sd">        Matrix containing the binding rates at each unoccupied grid element.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    </span>
+<span class="sd">    Import libraries:</span>
+<span class="sd">        </span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; from nearestNeighbours import nearestNeighbours</span>
+<span class="sd">    &gt;&gt;&gt; from kBUcoop import kBUcoop</span>
+<span class="sd">    </span>
+<span class="sd">    Create and populate grid and calculate nearest neighbour matrix:</span>
+
+<span class="sd">    &gt;&gt;&gt; kUB=0.0005</span>
+<span class="sd">    &gt;&gt;&gt; N=10</span>
+<span class="sd">    &gt;&gt;&gt; PSD=np.zeros((N,N))</span>
+<span class="sd">    &gt;&gt;&gt; PSD[np.random.randint(0,N,20),np.random.randint(0,N,20)]=1</span>
+<span class="sd">    &gt;&gt;&gt; NN=nearestNeighbours(PSD)</span>
+<span class="sd">    </span>
+<span class="sd">    Plot:</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; plt.figure(figsize=(4,3), dpi=150)</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(kUBcoop(kUB, np.arange(0,9), np.array([0]*9)))</span>
+<span class="sd">    &gt;&gt;&gt; plt.xlabel(&#39;number of nearest neighbours&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.ylabel(&#39;binding rate $k_{UB}^{coop}$&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; fig=plt.figure(figsize=(3,2.25), dpi=150)</span>
+<span class="sd">    &gt;&gt;&gt; plt.imshow(PSD)</span>
+<span class="sd">    &gt;&gt;&gt; cbar=plt.colorbar()</span>
+<span class="sd">    &gt;&gt;&gt; cbar.set_label(&#39;occupied (type)&#39;, rotation=90, labelpad=10, y=0.5)</span>
+<span class="sd">    &gt;&gt;&gt; plt.xlabel(&#39;position&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.ylabel(&#39;position&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; fig=plt.figure(figsize=(3,2.25), dpi=150)</span>
+<span class="sd">    &gt;&gt;&gt; plt.imshow(NN)</span>
+<span class="sd">    &gt;&gt;&gt; cbar=plt.colorbar()</span>
+<span class="sd">    &gt;&gt;&gt; cbar.set_label(&#39;nearest neighbours&#39;, rotation=90, labelpad=10, y=0.5)</span>
+<span class="sd">    &gt;&gt;&gt; plt.xlabel(&#39;position&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.ylabel(&#39;position&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; fig=plt.figure(figsize=(3,2.25), dpi=150)</span>
+<span class="sd">    &gt;&gt;&gt; plt.imshow(kUBcoop(kUB, NN, PSD))</span>
+<span class="sd">    &gt;&gt;&gt; cbar=plt.colorbar()</span>
+<span class="sd">    &gt;&gt;&gt; cbar.set_label(&#39;binding rate $k_{UB}^{coop}$&#39;, rotation=90, labelpad=10, y=0.5)</span>
+<span class="sd">    &gt;&gt;&gt; plt.xlabel(&#39;position&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.ylabel(&#39;position&#39;)</span>
+
+<span class="sd">    Output:</span>
+<span class="sd">        </span>
+<span class="sd">    .. image:: images/example1_kUBcoop.png</span>
+<span class="sd">        :width: 45%</span>
+<span class="sd">    .. image:: images/example2_kUBcoop.png</span>
+<span class="sd">        :width: 45%</span>
+<span class="sd">    .. image:: images/example3_kUBcoop.png</span>
+<span class="sd">        :width: 45%</span>
+<span class="sd">    .. image:: images/example4_kUBcoop.png</span>
+<span class="sd">        :width: 45%</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">M</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">NN</span><span class="p">))</span>
+    <span class="n">free</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">PSD</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">v</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+    <span class="n">M</span><span class="p">[</span><span class="n">free</span><span class="p">]</span><span class="o">=</span><span class="p">((</span><span class="n">kUB</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="n">v</span><span class="o">/</span><span class="mi">8</span><span class="o">+</span><span class="mi">1</span><span class="p">))[</span><span class="n">NN</span><span class="p">])[</span><span class="n">free</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">M</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Moritz F P Becker
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
