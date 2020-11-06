@@ -64,7 +64,7 @@ kexo0=0.0018
 kendo=0.0021
 kBU=0.1
 kin_RE=0.1
-kout_RE=0.00769
+kout_RE=0.000615
 V0=0.08
 
 t=np.arange(0,130*60)

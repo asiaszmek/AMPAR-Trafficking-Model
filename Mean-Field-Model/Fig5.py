@@ -49,7 +49,7 @@ kendo=0.0021
 kBU=0.1
 kUB0=0.0005
 kin_RE=0.1
-kout_RE=0.00769
+kout_RE=0.000615
 Vspine0=0.08
 
 kUB=mf.Parameter(kUB0)
@@ -112,7 +112,10 @@ for i,Init, Vspine0 in zip(range(len(vList)),initList,vList):
 
     Vspine=mf.Parameter(Vspine0)
     Vspine.timecourse(mf.DV,[Vspine0,True])
-    
+
+    #Calculate the rate at which AMPARs from endosomes exit the spine such that Sexo is 13 independent of the initial spine volume:
+    kout_RE=kin_RE*Vspine0/13
+       
     P=4*np.pi*(3*Vspine.base_value/(4*np.pi))**(2/3)/0.89*70
     
     Model=mf.Model_system()
@@ -139,6 +142,7 @@ for i,Init, Vspine0 in zip(range(len(vList)),initList,vList):
 vList=[0.039,0.08,0.376]
 initList = [[5.9,8.5,13],[10,20,13],[38.9,142.4,13]]
 
+kout_RE=0.000615
 sLTP=1
 Cooperativity=1
     
@@ -149,11 +153,8 @@ for i,Init, Vspine0 in zip(range(len(vList)),initList,vList):
     Vspine=mf.Parameter(Vspine0)
     Vspine.timecourse(mf.DV,[Vspine0,True])
     
-    #Calculate the exocytosis event size Sexo from the spine volume:
-    Sexo_0=13*Vspine0/0.08
-    kin_RE=0.1
-    kout_RE=kin_RE/Sexo_0
-    
+    #Calculate fixed point of the spine volume dependent exocytosis event size Sexo and update the intial state:
+    Sexo_0=kin_RE/kout_RE*Vspine0
     Init[2]=Sexo_0
     
     P=4*np.pi*(3*Vspine.base_value/(4*np.pi))**(2/3)/0.89*70

@@ -164,11 +164,9 @@ class Model_system():
         if sLTP==1:
             Vspine.update(t)
         
-        Rspine=(3*Vspine.current_value/(4*np.pi))**(1/3)
-        Aspine=np.pi*(2*Rspine)**2    
+        Aspine=4*np.pi*(3*Vspine.current_value/(4*np.pi))**(2/3)
 
-
-        dS_exo=kin_RE-kout_RE*Vspine.base_value/Vspine.current_value*S_exo
+        dS_exo=kin_RE-kout_RE*S_exo/Vspine.current_value
         dU=kexo.current_value*S_exo+kin+kBU_(B,kBU,Cooperativity,P)*B-kendo*U/Aspine-kout*U/Aspine-kUB_(B,kUB.current_value,Cooperativity,P)*(P-B)*U/Aspine
         dB=kUB_(B,kUB.current_value,Cooperativity,P)*(P-B)*U/Aspine-kBU_(B,kBU,Cooperativity,P)*B
     
