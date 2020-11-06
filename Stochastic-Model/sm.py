@@ -29,7 +29,7 @@ def nearestNeighbours(PSD):
         
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> from nearestNeighbours import nearestNeighbours
+    >>> import sm as sm
     
     Create and populate grid and calculate nearest neighbour matrix:
 
@@ -37,7 +37,7 @@ def nearestNeighbours(PSD):
     >>> PSD=np.zeros((N,N))
     >>> PSD[np.random.randint(0,N,20),np.random.randint(0,N,20)]=1
     >>> 
-    >>> NN=nearestNeighbours(PSD)
+    >>> NN=sm.nearestNeighbours(PSD)
     
     Plot:
         
@@ -61,18 +61,20 @@ def nearestNeighbours(PSD):
         :width: 30%
     """
     
-    N=len(PSD)
-    PSD_border=np.zeros((N+2,N+2));#PSD_boarder is the matrix that contains PSD with the addition of one row or column to each border of PSD%
-    PSD_border[1:N+1,1:N+1]=PSD!=0;#PSD also accounts for receptor types (bleached, not not bleached) such that occupied sites can have float values >0. Therefore it has to be checked where PSD does not equal zero to genererate the matrix of occupied sites PSD_boarder.
+    n=np.shape(PSD)[0]
+    m=np.shape(PSD)[1]
+    
+    PSD_border=np.zeros((n+2,m+2));#PSD_boarder is the matrix that contains PSD with the addition of one row or column to each border of PSD%
+    PSD_border[1:n+1,1:m+1]=PSD!=0;#PSD also accounts for receptor types (bleached, not not bleached) such that occupied sites can have float values >0. Therefore it has to be checked where PSD does not equal zero to genererate the matrix of occupied sites PSD_boarder.
             
-    PSD_up=PSD_border[0:N,1:N+1];# The matrix PSD_up represent the number of occupied nearest neighbors up to each site. 
-    PSD_down=PSD_border[2:N+2,1:N+1];# The matrix PSD_down represent the number of occupied nearest neighbors down to each site.
-    PSD_left=PSD_border[1:N+1,0:N];# The matrix PSD_left represent the number of occupied nearest neighbors on the left to each site.
-    PSD_right=PSD_border[1:N+1,2:N+2];# The matrix PSD_right represent the number of occupied nearest neighbors on the right of each site.
-    PSD_upright=PSD_border[0:N,2:N+2];# The matrix PSD_upright represent the number of occupied nearest neighbors up-right to each site.
-    PSD_downleft=PSD_border[2:N+2,0:N];# The matrix PSD_downleft represent the number of occupied nearest neighbors down-left to each site.
-    PSD_downright=PSD_border[2:N+2,2:N+2];# The matrix PSD_downright represent the number of occupied nearest neighbors down-right to each site.
-    PSD_upleft=PSD_border[0:N,0:N];# The matrix PSD_upleft represent the number of occupied nearest neighbors up-left to each site.
+    PSD_up=PSD_border[0:n,1:m+1];# The matrix PSD_up represent the number of occupied nearest neighbors up to each site. 
+    PSD_down=PSD_border[2:n+2,1:m+1];# The matrix PSD_down represent the number of occupied nearest neighbors down to each site.
+    PSD_left=PSD_border[1:n+1,0:m];# The matrix PSD_left represent the number of occupied nearest neighbors on the left to each site.
+    PSD_right=PSD_border[1:n+1,2:m+2];# The matrix PSD_right represent the number of occupied nearest neighbors on the right of each site.
+    PSD_upright=PSD_border[0:n,2:m+2];# The matrix PSD_upright represent the number of occupied nearest neighbors up-right to each site.
+    PSD_downleft=PSD_border[2:n+2,0:m];# The matrix PSD_downleft represent the number of occupied nearest neighbors down-left to each site.
+    PSD_downright=PSD_border[2:n+2,2:m+2];# The matrix PSD_downright represent the number of occupied nearest neighbors down-right to each site.
+    PSD_upleft=PSD_border[0:n,0:m];# The matrix PSD_upleft represent the number of occupied nearest neighbors up-left to each site.
     
     NN=PSD_up+PSD_down+PSD_left+PSD_right+PSD_upright+PSD_downright+PSD_downleft+PSD_upleft;#The matrix nearestNeighbors represents the total number of occupied nearest neighbors for each site.
     
@@ -112,8 +114,7 @@ def kBUcoop(kBU, NN, PSD, typeID, beta=1.0):
         
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> from nearestNeighbours import nearestNeighbours
-    >>> from kBUcoop import kBUcoop
+    >>> import sm as sm
     
     Create and populate grid and calculate nearest neighbour matrix:
 
@@ -122,12 +123,12 @@ def kBUcoop(kBU, NN, PSD, typeID, beta=1.0):
     >>> N=10
     >>> PSD=np.zeros((N,N))
     >>> PSD[np.random.randint(0,N,20),np.random.randint(0,N,20)]=typeID
-    >>> NN=nearestNeighbours(PSD)
+    >>> NN=sm.nearestNeighbours(PSD)
     
     Plot:
     
     >>> plt.figure(figsize=(4,3), dpi=150)
-    >>> plt.plot(kBUcoop(kBU, np.arange(0,9), np.array([typeID]*9), typeID))
+    >>> plt.plot(sm.kBUcoop(kBU, np.arange(0,9), np.array([typeID]*9), typeID))
     >>> plt.xlabel('number of nearest neighbours')
     >>> plt.ylabel('unbinding rate $k_{BU}^{coop}$')
     >>> 
@@ -146,7 +147,7 @@ def kBUcoop(kBU, NN, PSD, typeID, beta=1.0):
     >>> plt.ylabel('position')
     >>> 
     >>> fig=plt.figure(figsize=(3,2.25), dpi=150)
-    >>> plt.imshow(kBUcoop(kBU, NN, PSD, typeID))
+    >>> plt.imshow(sm.kBUcoop(kBU, NN, PSD, typeID))
     >>> cbar=plt.colorbar()
     >>> cbar.set_label('unbinding rate $k_{BU}^{coop}$', rotation=90, labelpad=10, y=0.5)
     >>> plt.xlabel('position')
@@ -164,7 +165,7 @@ def kBUcoop(kBU, NN, PSD, typeID, beta=1.0):
         :width: 45%
     """
     
-    M=np.zeros(np.shape(NN))
+    M=np.zeros(np.shape(PSD))
     occupied=np.where(PSD==typeID)
     Chi=np.arange(0,9)/8
     M[occupied]=((kBU*(1-Chi*beta))[NN])[occupied]
@@ -203,8 +204,7 @@ def kUBcoop(kUB, NN, PSD, alpha=16):
         
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> from nearestNeighbours import nearestNeighbours
-    >>> from kBUcoop import kBUcoop
+    >>> import sm as sm
     
     Create and populate grid and calculate nearest neighbour matrix:
 
@@ -212,12 +212,12 @@ def kUBcoop(kUB, NN, PSD, alpha=16):
     >>> N=10
     >>> PSD=np.zeros((N,N))
     >>> PSD[np.random.randint(0,N,20),np.random.randint(0,N,20)]=1
-    >>> NN=nearestNeighbours(PSD)
+    >>> NN=sm.nearestNeighbours(PSD)
     
     Plot:
     
     >>> plt.figure(figsize=(4,3), dpi=150)
-    >>> plt.plot(kUBcoop(kUB, np.arange(0,9), np.array([0]*9)))
+    >>> plt.plot(sm.kUBcoop(kUB, np.arange(0,9), np.array([0]*9)))
     >>> plt.xlabel('number of nearest neighbours')
     >>> plt.ylabel('binding rate $k_{UB}^{coop}$')
     >>> 
@@ -236,7 +236,7 @@ def kUBcoop(kUB, NN, PSD, alpha=16):
     >>> plt.ylabel('position')
     >>> 
     >>> fig=plt.figure(figsize=(3,2.25), dpi=150)
-    >>> plt.imshow(kUBcoop(kUB, NN, PSD))
+    >>> plt.imshow(sm.kUBcoop(kUB, NN, PSD))
     >>> cbar=plt.colorbar()
     >>> cbar.set_label('binding rate $k_{UB}^{coop}$', rotation=90, labelpad=10, y=0.5)
     >>> plt.xlabel('position')
@@ -254,7 +254,7 @@ def kUBcoop(kUB, NN, PSD, alpha=16):
         :width: 45%
     """
 
-    M=np.zeros(np.shape(NN))
+    M=np.zeros(np.shape(PSD))
     free=np.where(PSD==0)
     Chi=np.arange(0,9)/8
     M[free]=((kUB*(alpha*Chi+1))[NN])[free]
@@ -300,10 +300,7 @@ def probabilityEval(Mub,Mbu,PSD,ID_basal,Mub_notBleached=None,Mbu_notBleached=No
         
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> from nearestNeighbours import nearestNeighbours
-    >>> from kBUcoop import kBUcoop
-    >>> from kUBcoop import kUBcoop
-    >>> from probabilityEval import probabilityEval
+    >>> import sm as sm
     
     Set parameters:
 
@@ -331,7 +328,7 @@ def probabilityEval(Mub,Mbu,PSD,ID_basal,Mub_notBleached=None,Mbu_notBleached=No
     >>>     if PSD[i,j]==0:
     >>>         PSD[i,j]=ID_notBleached
     >>>         
-    >>> NN=nearestNeighbours(PSD)
+    >>> NN=sm.nearestNeighbours(PSD)
     
     Plot PSD:
         
@@ -341,12 +338,12 @@ def probabilityEval(Mub,Mbu,PSD,ID_basal,Mub_notBleached=None,Mbu_notBleached=No
     
     Calculate probability Matrices and update the PSD Matrix:
         
-    >>> Mbu=kBUcoop(kBU, NN, PSD, ID_basal)*dt
-    >>> Mub=kUBcoop(kUB*U, NN, PSD)*dt
-    >>> Mbu_notBleached=kBUcoop(kBU, NN, PSD, ID_notBleached)*dt
-    >>> Mub_notBleached=kUBcoop(kUB*U_notBleached, NN, PSD)*dt
+    >>> Mbu=sm.kBUcoop(kBU, NN, PSD, ID_basal)*dt
+    >>> Mub=sm.kUBcoop(kUB*U, NN, PSD)*dt
+    >>> Mbu_notBleached=sm.kBUcoop(kBU, NN, PSD, ID_notBleached)*dt
+    >>> Mub_notBleached=sm.kUBcoop(kUB*U_notBleached, NN, PSD)*dt
     >>>
-    >>> PSD,dBoff,dBon,dBoff_notBleached,dBon_notBleached=probabilityEval(Mub,Mbu,Mub_notBleached,Mbu_notBleached,PSD)
+    >>> PSD,dBoff,dBon,dBoff_notBleached,dBon_notBleached=sm.probabilityEval(Mub,Mbu,Mub_notBleached,Mbu_notBleached,PSD)
 
     Plot PSD:
         
@@ -362,33 +359,35 @@ def probabilityEval(Mub,Mbu,PSD,ID_basal,Mub_notBleached=None,Mbu_notBleached=No
         :width: 45%
     """    
     
-    N=len(Mub)
+    n=np.shape(PSD)[0]
+    m=np.shape(PSD)[1]
     
-    R=np.random.rand(N,N)
+    R=np.random.rand(n,m)
     Mask_ub=R<Mub
     Mask_bu=R<Mbu
     
     if Mub_notBleached is not None:
-        R=np.random.rand(N,N)
+        R=np.random.rand(n,m)
         Mask_ub_notBleached=R<Mub_notBleached
         Mask_bu_notBleached=R<Mbu_notBleached
 
     
     if Mub_notBleached is not None:
-        R2=np.random.rand(N,N)
+        R2=np.random.rand(n,m)
         ii_basal=np.where((Mask_ub==True)&(Mask_ub_notBleached==True)&(R2<0.5))
         ii_notBleached=np.where((Mask_ub==True)&(Mask_ub_notBleached==True)&(R2>0.5))
         Mask_ub[ii_basal]=False
         Mask_ub_notBleached[ii_notBleached]=False
     
     
-    dBoff=len(np.where(PSD[Mask_bu]==ID_basal)[0])
-    dBon=len(np.where(PSD[Mask_ub]==0)[0])
+    dBoff=np.sum(Mask_bu)
+    dBon=np.sum(Mask_ub)
     
     if Mub_notBleached is not None:
-        dBoff_notBleached=len(np.where(PSD[Mask_bu_notBleached]==ID_notBleached)[0])
-        dBon_notBleached=len(np.where(PSD[Mask_ub_notBleached]==0)[0])
+        dBoff_notBleached=np.sum(Mask_bu_notBleached)
+        dBon_notBleached=np.sum(Mask_ub_notBleached)
 
+    
     PSD[Mask_ub]=ID_basal
     PSD[Mask_bu]=0
     

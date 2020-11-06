@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. sphinx-build -b html C:\Users\Moritz\ownCloud\MyWiki\LabBook\2020-10-31\Stochastic-Model\docs\source C:\Users\Moritz\ownCloud\MyWiki\LabBook\2020-10-31\Stochastic-Model\docs\build
+.. sphinx-build -b html C:\Users\Moritz\ownCloud\PlosCB\AMPAR-Model-Synapse\Stochastic-Model\docs\source C:\Users\Moritz\ownCloud\PlosCB\AMPAR-Model-Synapse\Stochastic-Model\docs\build
 
 Welcome to E-LTP AMPAR-Model's documentation!
 =============================================

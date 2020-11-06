@@ -54,7 +54,6 @@ def FRAP(N_List, UFP_List, beta, alpha, kUB, kBU, duration, Nr_Trials):
     
     A_spine_basal=0.898
     
-    kBU=0.1
     kout=0.018
     kin=0.02
     #dt=0.5#the size of each time step
