@@ -59,6 +59,10 @@ kBUcoop_N=[]
 Bon_N=[]
 kUBcoop_N=[]
 
+NN_occ=[]
+NN_free=[]
+
+
 ID_basal=1
 
 for N in N_List:
@@ -69,6 +73,9 @@ for N in N_List:
     kBUcoop_0=[]
     Bon_0=[]
     kUBcoop_0=[]
+    
+    NN_occ_0=[]
+    NN_free_0=[]
 
     for UFP_0 in UFP_List:
         
@@ -89,8 +96,8 @@ for N in N_List:
                 
                 NN=sm.nearestNeighbours(PSD)
                 
-                Mbu=sm.kBUcoop(kBU, NN, PSD, ID_basal)*dt
-                Mub=sm.kUBcoop(kUB*U/A_spine, NN, PSD)*dt
+                Mbu=sm.kBUcoop(kBU, NN, PSD, ID_basal, beta)*dt
+                Mub=sm.kUBcoop(kUB*U/A_spine, NN, PSD, alpha)*dt
 
                 PSD,dBoff,dBon=sm.probabilityEval(Mub,Mbu,PSD,ID_basal)
                 
@@ -102,9 +109,11 @@ for N in N_List:
                     if PSD[PSD==ID_basal].size>0: #if statement necessary, otherwise 
                         kBUcoop_0.append(np.mean(Mbu[PSD==ID_basal])/dt)
                         Boff_0.append(np.sum(PSD))
+                        NN_occ_0.append(np.mean(NN[PSD==ID_basal]))
                     if PSD[PSD==0].size>0 and U>0:
-                        kUBcoop_0.append(np.mean(Mub[PSD==0])/U/dt)
+                        kUBcoop_0.append(np.mean(Mub[PSD==0])/(U/A_spine)/dt)
                         Bon_0.append(np.sum(PSD))
+                        NN_free_0.append(np.mean(NN[PSD==0]))
                 
 
 
@@ -112,6 +121,9 @@ for N in N_List:
     kBUcoop_N.append(kBUcoop_0)
     Bon_N.append(Bon_0)
     kUBcoop_N.append(kUBcoop_0)
+    
+    NN_occ.append(NN_occ_0)
+    NN_free.append(NN_free_0)
 
 
 #%%
@@ -271,7 +283,58 @@ if SaveFig==1:
     fig.savefig('Figures\\m.png', bbox_inches="tight", dpi=400)
     fig.savefig('Figures\\m.svg', bbox_inches="tight", dpi=400)
 
+
+#%%
+
+
+col=sns.cubehelix_palette(len(N_List), start=.5, rot=-.75, dark=0.2, light=0.7)
+
+fig=plt.figure(figsize=(4,3), dpi=150)
+for Boff,NNocc,N,i in zip(Boff_N,NN_occ,N_List,range(len(N_List))):
     
+    d={'value1': Boff[0::dn], 'value2': np.array(NNocc[0::dn])/8}
+    df = pd.DataFrame(data=d)
+    
+    sns.lineplot(x="value1", y="value2", data=df, color=col[i], linewidth=3, label='$P={:1d}$'.format(N**2), ci=None)
+
+
+plt.text(0.5,0.5,'$k_{UB}$='+'{:1.4f} '.format(kUB)+'$(\# s)^{-1}$', transform=fig.axes[0].transAxes)
+sns.despine()
+plt.xlabel('Bound AMPARs $B$ (#)')
+plt.ylabel(r'$\chi$ (occpudied slots)')
+lgd = plt.legend(loc="best", mode="normal", borderaxespad=0, ncol=2, prop=fontLgd)
+plt.xlim(0,150)
+plt.ylim(0)
+Ratio=fig.axes[0].get_xlim()[1]/fig.axes[0].get_ylim()[1]
+fig.axes[0].set_aspect(aspect=Ratio/2, adjustable='box')
+#fig.tight_layout()
+
+
+#%%
+
+col=sns.cubehelix_palette(len(N_List), start=.5, rot=0.0, dark=0.2, light=0.7)
+
+fig=plt.figure(figsize=(4,3), dpi=150)
+for Bon,NNfree,N,i in zip(Bon_N,NN_free,N_List,range(len(N_List))):
+    
+    d={'value1': Bon[0::dn], 'value2': np.array(NNfree[0::dn])/8}
+    df = pd.DataFrame(data=d)
+    
+    sns.lineplot(x="value1", y="value2", data=df, color=col[i], linewidth=3, label='$P={:1d}$'.format(N**2), ci=None)
+
+
+plt.text(0.5,0.5,'$k_{UB}$='+'{:1.4f} '.format(kUB)+'$(\# s)^{-1}$', transform=fig.axes[0].transAxes)
+sns.despine()
+plt.xlabel('Bound AMPARs $B$ (#)')
+plt.ylabel(r'$\chi$ (free slots)')
+lgd = plt.legend(loc="best", mode="normal", borderaxespad=0, ncol=2, prop=fontLgd)
+plt.xlim(0,150)
+plt.ylim(0)
+Ratio=fig.axes[0].get_xlim()[1]/fig.axes[0].get_ylim()[1]
+fig.axes[0].set_aspect(aspect=Ratio/2, adjustable='box')
+#fig.tight_layout()
+    
+
 #%%
 
 
