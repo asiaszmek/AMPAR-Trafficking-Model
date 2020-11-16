@@ -10,18 +10,14 @@ Created on Tue Nov  3 10:13:49 2020
 This script reproduces the plots seen in Fig 6D of "The biophysical basis underlying the maintenance of early phase long-term potentiation".
 
 This script requires that `read_roi`,`numpy`,`matplotlib` and `seaborn` are installed within the Python environment you are running this script in.
-
-This file can also be imported as a module and contains the following
-functions:
-
-    * checkTimeStep - Returns integration time step dt.
-    * FRAP - does FRAP simulation.
 """
+
+import sys
+sys.path.append('../')
 
 import numpy as np
 import matplotlib.pyplot as plt
-import sm as sm
-from FRAP import FRAP
+from ampartrafficking.frap import FRAP
 import seaborn as sns
 sns.set_style("ticks")
 from matplotlib.font_manager import FontProperties

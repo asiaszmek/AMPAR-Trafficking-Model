@@ -12,9 +12,12 @@ This script reproduces the plots seen in Fig 6D of "The biophysical basis underl
 This script requires that `numpy`,`matplotlib` and `seaborn` are installed within the Python environment you are running this script in.
 """
 
+import sys
+sys.path.append('../')
+
 import numpy as np
 import matplotlib.pyplot as plt
-from FRAP import FRAP
+from ampartrafficking.frap import FRAP
 import seaborn as sns
 sns.set_style("ticks")
 from matplotlib.font_manager import FontProperties

@@ -5,13 +5,6 @@ Created on Wed Nov  4 21:42:22 2020
 @author: Moritz
 """
 
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Nov  4 21:34:08 2020
-
-@author: Moritz
-"""
-
 """Fig 6D
 
 This script reproduces the plots seen in Fig 6D of "The biophysical basis underlying the maintenance of early phase long-term potentiation".
@@ -19,9 +12,12 @@ This script reproduces the plots seen in Fig 6D of "The biophysical basis underl
 This script requires that `numpy`,`matplotlib` and `seaborn` are installed within the Python environment you are running this script in.
 """
 
+import sys
+sys.path.append('../')
+
 import numpy as np
 import matplotlib.pyplot as plt
-from FRAP import FRAP
+from ampartrafficking.frap import FRAP
 import seaborn as sns
 sns.set_style("ticks")
 from matplotlib.font_manager import FontProperties

@@ -12,9 +12,12 @@ This script reproduces the plots seen in Fig 3B of "The biophysical basis underl
 This script requires that `pandas`,`numpy`,`scipy.optimize`,`matplotlib` and `seaborn` are installed within the Python environment you are running this script in.
 """
 
+import sys
+sys.path.append('../')
+
 import numpy as np
 import matplotlib.pyplot as plt
-import sm as sm
+from ampartrafficking import stochastic_model as sm
 import pandas as pd
 from scipy.optimize import curve_fit
 import seaborn as sns

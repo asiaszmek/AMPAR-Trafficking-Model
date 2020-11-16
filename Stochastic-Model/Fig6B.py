@@ -12,9 +12,12 @@ This script reproduces the plots seen in Fig 6B of "The biophysical basis underl
 This script requires that `numpy`,`matplotlib` and `seaborn` are installed within the Python environment you are running this script in.
 """
 
+import sys
+sys.path.append('../')
+
 import numpy as np
 import matplotlib.pyplot as plt
-import sm as sm
+from ampartrafficking import stochastic_model as sm
 import seaborn as sns
 sns.set_style("ticks")
 from matplotlib.font_manager import FontProperties 

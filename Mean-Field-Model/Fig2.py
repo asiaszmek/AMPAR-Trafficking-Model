@@ -10,18 +10,15 @@ Created on Tue Nov  3 16:37:38 2020
 This script reproduces the plots seen in Fig 2 of "The biophysical basis underlying the maintenance of early phase long-term potentiation".
 
 This script requires that `numpy`,`scipy.integrate`,`matplotlib` and `seaborn` are installed within the Python environment you are running this script in.
-
-This file can also be imported as a module and contains the following
-functions:
-
-    * Stim_Resp - returns a function describing the response of a parameter to a stimulus.
-    * DV - returns a function describing the spine volume change during sLTP.
 """
+
+import sys
+sys.path.append('../')
 
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
-import mf as mf
+from ampartrafficking import rate_model as rm
 import seaborn as sns
 sns.set_style("ticks")
 plt.rcParams['svg.fonttype'] = 'none'
@@ -30,17 +27,16 @@ fontLgd = FontProperties()
 fontLgd.set_size('x-small')
 
 
-#%%Define functions for parameter stimulus response and structural plasticity:
-
+#%%
 
 # def main():
 
 SaveFig=0
 
 #Color palettes used in plots:
-    
 col1=sns.dark_palette(sns.color_palette("colorblind", 10)[0],4)[3]
 col2=sns.dark_palette(sns.color_palette("colorblind", 10)[1],4)[3]
+col3=sns.dark_palette(sns.color_palette("colorblind", 10)[8],4)[3]
 
 #%%
 
@@ -61,11 +57,12 @@ P=70
 kin=0.2
 kout=0.018
 kexo0=0.0018
-kendo=0.0021
+kendo=0.002058
 kBU=0.1
 kin_RE=0.1
 kout_RE=0.000615
 V0=0.08
+A0=4*np.pi*(3*V0/(4*np.pi))**(2/3)
 
 t=np.arange(0,130*60)
 
@@ -75,27 +72,27 @@ t=np.arange(0,130*60)
 
 sLTP=0
 Cooperativity=0
-kUB0=0.0036
+kUB0=0.00359
 
 #E-LTP with exocytosis:
-kUB=mf.Parameter(kUB0)
-kUB.timecourse(mf.Stim_Resp,[1,30,5,60])
-kexo=mf.Parameter(kexo0)
-kexo.timecourse(mf.Stim_Resp,[1,5,25,60])
-Vspine=mf.Parameter(V0)
-Vspine.timecourse(mf.DV,[V0,True])
+kUB=rm.Parameter(kUB0)
+kUB.timecourse(rm.Stim_Resp,[1,30,5,60])
+kexo=rm.Parameter(kexo0)
+kexo.timecourse(rm.Stim_Resp,[1,5,25,60])
+Vspine=rm.Parameter(V0)
+Vspine.timecourse(rm.DV,[V0,True])
 
-Model=mf.Model_system()
+Model=rm.Model_system()
 
 solve,infodict = odeint(Model.odes,Init,t,args=(Vspine,P,kin,kout,kexo,kendo,kUB,kBU,Cooperativity,sLTP,kin_RE,kout_RE),full_output=True)
 
 #E-LTP without exocytosis:
-kexo=mf.Parameter(0)
-kexo.timecourse(mf.Stim_Resp,[1,0,25,60])
-Vspine=mf.Parameter(V0)
-Vspine.timecourse(mf.DV,[V0,False])
+kexo=rm.Parameter(0)
+kexo.timecourse(rm.Stim_Resp,[1,0,25,60])
+Vspine=rm.Parameter(V0)
+Vspine.timecourse(rm.DV,[V0,False])
 
-Model=mf.Model_system()
+Model=rm.Model_system()
 
 solve2,infodict2 = odeint(Model.odes,Init,t,args=(Vspine,P,kin,kout,kexo,kendo,kUB,kBU,Cooperativity,sLTP,kin_RE,kout_RE),full_output=True)
 
@@ -117,6 +114,19 @@ if SaveFig==1:
     print('Save')
     fig.savefig('Figures\\Fig2A.png', bbox_inches="tight", dpi=400)
     fig.savefig('Figures\\Fig2A.svg', bbox_inches="tight", dpi=400)
+    
+
+
+fig=plt.figure(figsize=(3.5,2), dpi=150)
+plt.plot(t/60,(solve.T[0]/A0)/(Init[0]/A0)*100, color=col3, linewidth=2, label='Basic Model')
+lgd=plt.legend(bbox_to_anchor=(0.05,0.65,0,0), loc="lower left", mode="normal", borderaxespad=1.5, ncol=2, prop=fontLgd)
+plt.axhline(100, color='k', linestyle='--', linewidth=0.5)
+plt.xlabel('Time (min)')
+plt.ylabel('Mobile AMPAR conc. \n $U/A_{spine}$ (%)')
+plt.xlim(-3,130)
+plt.ylim(80)
+sns.despine()
+fig.tight_layout()
 
 
 #%%
@@ -125,27 +135,27 @@ if SaveFig==1:
 
 sLTP=1
 Cooperativity=0
-kUB0=0.0036
+kUB0=0.00359
 
 #E-LTP with exocytosis:
-kUB=mf.Parameter(kUB0)
-kUB.timecourse(mf.Stim_Resp,[1,30,5,60])
-kexo=mf.Parameter(kexo0)
-kexo.timecourse(mf.Stim_Resp,[1,5,25,60])
-Vspine=mf.Parameter(V0)
-Vspine.timecourse(mf.DV,[V0,True])
+kUB=rm.Parameter(kUB0)
+kUB.timecourse(rm.Stim_Resp,[1,30,5,60])
+kexo=rm.Parameter(kexo0)
+kexo.timecourse(rm.Stim_Resp,[1,5,25,60])
+Vspine=rm.Parameter(V0)
+Vspine.timecourse(rm.DV,[V0,True])
 
-Model=mf.Model_system()
+Model=rm.Model_system()
 
 solve,infodict = odeint(Model.odes,Init,t,args=(Vspine,P,kin,kout,kexo,kendo,kUB,kBU,Cooperativity,sLTP,kin_RE,kout_RE),full_output=True)
 
 #E-LTP without exocytosis:
-kexo=mf.Parameter(0)
-kexo.timecourse(mf.Stim_Resp,[1,0,25,60])
-Vspine=mf.Parameter(V0)
-Vspine.timecourse(mf.DV,[V0,False])
+kexo=rm.Parameter(0)
+kexo.timecourse(rm.Stim_Resp,[1,0,25,60])
+Vspine=rm.Parameter(V0)
+Vspine.timecourse(rm.DV,[V0,False])
 
-Model=mf.Model_system()
+Model=rm.Model_system()
 
 solve2,infodict2 = odeint(Model.odes,Init,t,args=(Vspine,P,kin,kout,kexo,kendo,kUB,kBU,Cooperativity,sLTP,kin_RE,kout_RE),full_output=True)
 
@@ -168,33 +178,49 @@ if SaveFig==1:
     fig.savefig('Figures\\Fig2B.png', bbox_inches="tight", dpi=400)
     fig.savefig('Figures\\Fig2B.svg', bbox_inches="tight", dpi=400)
 
+
+fig=plt.figure(figsize=(3.5,2), dpi=150)
+Vspine=rm.Parameter(V0)
+Vspine.timecourse(rm.DV,[V0,True])
+Vspine.update(t)
+Aspine=4*np.pi*(3*Vspine.current_value/(4*np.pi))**(2/3)
+plt.plot(t/60,(solve.T[0]/Aspine)/(Init[0]/A0)*100, color=col3, linewidth=2, label='sLTP Model')
+lgd=plt.legend(bbox_to_anchor=(0.05,0.65,0,0), loc="lower left", mode="normal", borderaxespad=1.5, ncol=2, prop=fontLgd)
+plt.axhline(100, color='k', linestyle='--', linewidth=0.5)
+plt.xlabel('Time (min)')
+plt.ylabel('Mobile AMPAR conc. \n $U/A_{spine}$ (%)')
+plt.xlim(-3,130)
+plt.ylim(80)
+sns.despine()
+fig.tight_layout()
+
 #%%
 
 #Cooperative receptor binding
 
 sLTP=0
 Cooperativity=1
-kUB0=0.0005#0.0036#
+kUB0=0.0005048
 
 #E-LTP with exocytosis:
-kUB=mf.Parameter(kUB0)
-kUB.timecourse(mf.Stim_Resp,[1,5,5,60])
-kexo=mf.Parameter(kexo0)
-kexo.timecourse(mf.Stim_Resp,[1,5,25,60])
-Vspine=mf.Parameter(V0)
-Vspine.timecourse(mf.DV,[V0,True])
+kUB=rm.Parameter(kUB0)
+kUB.timecourse(rm.Stim_Resp,[1,5,5,60])
+kexo=rm.Parameter(kexo0)
+kexo.timecourse(rm.Stim_Resp,[1,5,25,60])
+Vspine=rm.Parameter(V0)
+Vspine.timecourse(rm.DV,[V0,True])
 
-Model=mf.Model_system()
+Model=rm.Model_system()
 
 solve,infodict = odeint(Model.odes,Init,t,args=(Vspine,P,kin,kout,kexo,kendo,kUB,kBU,Cooperativity,sLTP,kin_RE,kout_RE),full_output=True)
 
 #E-LTP without exocytosis:
-kexo=mf.Parameter(0)
-kexo.timecourse(mf.Stim_Resp,[1,0,25,60])
-Vspine=mf.Parameter(V0)
-Vspine.timecourse(mf.DV,[V0,False])
+kexo=rm.Parameter(0)
+kexo.timecourse(rm.Stim_Resp,[1,0,25,60])
+Vspine=rm.Parameter(V0)
+Vspine.timecourse(rm.DV,[V0,False])
 
-Model=mf.Model_system()
+Model=rm.Model_system()
 
 solve2,infodict2 = odeint(Model.odes,Init,t,args=(Vspine,P,kin,kout,kexo,kendo,kUB,kBU,Cooperativity,sLTP,kin_RE,kout_RE),full_output=True)
 
@@ -218,33 +244,45 @@ if SaveFig==1:
     fig.savefig('Figures\\Fig2C.svg', bbox_inches="tight", dpi=400)
 
 
+fig=plt.figure(figsize=(3.5,2), dpi=150)
+plt.plot(t/60,(solve.T[0]/A0)/(Init[0]/A0)*100, color=col3, linewidth=2, label='Coop. Model')
+lgd=plt.legend(bbox_to_anchor=(0.05,0.65,0,0), loc="lower left", mode="normal", borderaxespad=1.5, ncol=2, prop=fontLgd)
+plt.axhline(100, color='k', linestyle='--', linewidth=0.5)
+plt.xlabel('Time (min)')
+plt.ylabel('Mobile AMPAR conc. \n $U/A_{spine}$ (%)')
+plt.xlim(-3,130)
+plt.ylim(80)
+sns.despine()
+fig.tight_layout()
+
+
 #%%
 
 #sLTP + cooperative receptor binding
 
 sLTP=1
 Cooperativity=1
-kUB0=0.0005#0.0036#
+kUB0=0.0005048
 
 #E-LTP with exocytosis:
-kUB=mf.Parameter(kUB0)
-kUB.timecourse(mf.Stim_Resp,[1,5,5,60])
-kexo=mf.Parameter(kexo0)
-kexo.timecourse(mf.Stim_Resp,[1,5,25,60])
-Vspine=mf.Parameter(V0)
-Vspine.timecourse(mf.DV,[V0,True])
+kUB=rm.Parameter(kUB0)
+kUB.timecourse(rm.Stim_Resp,[1,5,5,60])
+kexo=rm.Parameter(kexo0)
+kexo.timecourse(rm.Stim_Resp,[1,5,25,60])
+Vspine=rm.Parameter(V0)
+Vspine.timecourse(rm.DV,[V0,True])
 
-Model=mf.Model_system()
+Model=rm.Model_system()
 
 solve,infodict = odeint(Model.odes,Init,t,args=(Vspine,P,kin,kout,kexo,kendo,kUB,kBU,Cooperativity,sLTP,kin_RE,kout_RE),full_output=True)
 
 #E-LTP without exocytosis:
-kexo=mf.Parameter(0)
-kexo.timecourse(mf.Stim_Resp,[1,0,25,60])
-Vspine=mf.Parameter(V0)
-Vspine.timecourse(mf.DV,[V0,False])
+kexo=rm.Parameter(0)
+kexo.timecourse(rm.Stim_Resp,[1,0,25,60])
+Vspine=rm.Parameter(V0)
+Vspine.timecourse(rm.DV,[V0,False])
 
-Model=mf.Model_system()
+Model=rm.Model_system()
 
 solve2,infodict2 = odeint(Model.odes,Init,t,args=(Vspine,P,kin,kout,kexo,kendo,kUB,kBU,Cooperativity,sLTP,kin_RE,kout_RE),full_output=True)
 
@@ -266,6 +304,22 @@ if SaveFig==1:
     print('Save')
     fig.savefig('Figures\\Fig2D.png', bbox_inches="tight", dpi=400)
     fig.savefig('Figures\\Fig2D.svg', bbox_inches="tight", dpi=400)
+
+
+fig=plt.figure(figsize=(3.5,2), dpi=150)
+Vspine=rm.Parameter(V0)
+Vspine.timecourse(rm.DV,[V0,True])
+Vspine.update(t)
+Aspine=4*np.pi*(3*Vspine.current_value/(4*np.pi))**(2/3)
+plt.plot(t/60,(solve.T[0]/Aspine)/(Init[0]/A0)*100, color=col3, linewidth=2, label='sLTP+Coop. Model')
+lgd=plt.legend(bbox_to_anchor=(0.05,0.65,0,0), loc="lower left", mode="normal", borderaxespad=1.5, ncol=2, prop=fontLgd)
+plt.axhline(100, color='k', linestyle='--', linewidth=0.5)
+plt.xlabel('Time (min)')
+plt.ylabel('Mobile AMPAR conc. \n $U/A_{spine}$ (%)')
+plt.xlim(-3,130)
+plt.ylim(80)
+sns.despine()
+fig.tight_layout()
 
 
 # if __name__ == "__main__":
