@@ -3,6 +3,7 @@
 AMPAR-Trafficking-Model contains the Python code used in the paper "The biophysical basis underlying the maintenance of early phase long-term potentiation". 
 
 * A package "ampartrafficking" is provided containing four modules:
+
 ** rate_model: Contains functions and classes for the rate model of AMPAR-trafficking (inlcuding the mean-field approximation of cooperative binding/unbinding rates).
 ** stochastic_model: Contains functions and classes for the stochastic, spatial model of cooperative receptor binding.
 ** parameter_sampling: Contains functions for random parameter sampling and subsequent simulation of the model. Depends on rate_model.
