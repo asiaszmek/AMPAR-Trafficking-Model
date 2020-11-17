@@ -13,6 +13,7 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
 
   
   
@@ -30,6 +31,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -80,8 +82,12 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html">Code documentation</a></li>
+</ul>
+
             
           
         </div>
@@ -155,7 +161,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">optimize</span>
 
-<div class="viewcode-block" id="Parameter"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.Parameter">[docs]</a><span class="k">class</span> <span class="nc">Parameter</span><span class="p">():</span>
+<div class="viewcode-block" id="Parameter"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.Parameter">[docs]</a><span class="k">class</span> <span class="nc">Parameter</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;This class defines some basic properties and functionality for parameters that change during LTP induction.</span>
 <span class="sd">    </span>
 <span class="sd">    Attributes</span>
@@ -181,7 +187,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">base_value</span><span class="o">=</span><span class="n">base_value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_value</span><span class="o">=</span><span class="n">base_value</span>
     
-<div class="viewcode-block" id="Parameter.timecourse"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.Parameter.timecourse">[docs]</a>    <span class="k">def</span> <span class="nf">timecourse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">function</span><span class="p">,</span><span class="n">pars</span><span class="p">):</span>
+<div class="viewcode-block" id="Parameter.timecourse"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.Parameter.timecourse">[docs]</a>    <span class="k">def</span> <span class="nf">timecourse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">function</span><span class="p">,</span><span class="n">pars</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up time course of the parameter during LTP-induction. Requires a function and the parameters of that function to be passed.</span>
 <span class="sd">        </span>
@@ -201,7 +207,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">course</span><span class="o">=</span><span class="n">function</span></div>
         
-<div class="viewcode-block" id="Parameter.update"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.Parameter.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">t</span><span class="p">):</span>
+<div class="viewcode-block" id="Parameter.update"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.Parameter.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">t</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up time course of the parameter during LTP-induction. Requires a function and the parameters of that function to be passed.</span>
 <span class="sd">        </span>
@@ -218,7 +224,7 @@
         
 
 
-<div class="viewcode-block" id="Model_system"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.Model_system">[docs]</a><span class="k">class</span> <span class="nc">Model_system</span><span class="p">():</span>
+<div class="viewcode-block" id="Model_system"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.Model_system">[docs]</a><span class="k">class</span> <span class="nc">Model_system</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;This class contains the set of differential equations that describe AMPAR trafficking at spines.</span>
 <span class="sd">    </span>
 <span class="sd">    Attributes</span>
@@ -238,7 +244,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">=</span><span class="p">[]</span>
         
-<div class="viewcode-block" id="Model_system.odes"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.Model_system.odes">[docs]</a>    <span class="k">def</span> <span class="nf">odes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">Init</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">Vspine</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">kin</span><span class="p">,</span><span class="n">kout</span><span class="p">,</span><span class="n">kexo</span><span class="p">,</span><span class="n">kendo</span><span class="p">,</span><span class="n">kUB</span><span class="p">,</span><span class="n">kBU</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">,</span><span class="n">sLTP</span><span class="p">,</span><span class="n">kin_RE</span><span class="p">,</span><span class="n">kout_RE</span><span class="p">):</span>
+<div class="viewcode-block" id="Model_system.odes"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.Model_system.odes">[docs]</a>    <span class="k">def</span> <span class="nf">odes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">Init</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">Vspine</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">kin</span><span class="p">,</span><span class="n">kout</span><span class="p">,</span><span class="n">kexo</span><span class="p">,</span><span class="n">kendo</span><span class="p">,</span><span class="n">kUB</span><span class="p">,</span><span class="n">kBU</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">,</span><span class="n">sLTP</span><span class="p">,</span><span class="n">kin_RE</span><span class="p">,</span><span class="n">kout_RE</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Defines the ODEs that describe the AMPAR dynamics at the spine.</span>
 <span class="sd">        </span>
@@ -301,7 +307,7 @@
 
 
 
-<div class="viewcode-block" id="kUB_"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.kUB_">[docs]</a><span class="k">def</span> <span class="nf">kUB_</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="n">kUB</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">,</span><span class="n">P</span><span class="p">):</span>
+<div class="viewcode-block" id="kUB_"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.kUB_">[docs]</a><span class="k">def</span> <span class="nf">kUB_</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="n">kUB</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">,</span><span class="n">P</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the receptor binding rate kUB for either the cooperative or the non-cooperative binding model.</span>
 
 <span class="sd">    Parameters</span>
@@ -326,7 +332,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">kUB</span></div>
 
-<div class="viewcode-block" id="kBU_"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.kBU_">[docs]</a><span class="k">def</span> <span class="nf">kBU_</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="n">kBU</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">,</span><span class="n">P</span><span class="p">):</span>
+<div class="viewcode-block" id="kBU_"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.kBU_">[docs]</a><span class="k">def</span> <span class="nf">kBU_</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="n">kBU</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">,</span><span class="n">P</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the receptor unbinding rate kUB for either the cooperative or the non-cooperative binding model.</span>
 
 <span class="sd">    Parameters</span>
@@ -353,7 +359,7 @@
         <span class="k">return</span> <span class="n">kBU</span></div>
             
 
-<div class="viewcode-block" id="Stim_Resp"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.Stim_Resp">[docs]</a><span class="k">def</span> <span class="nf">Stim_Resp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a0</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+<div class="viewcode-block" id="Stim_Resp"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.Stim_Resp">[docs]</a><span class="k">def</span> <span class="nf">Stim_Resp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a0</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function describes the response of a parameter to the LTP induction-stimulus.</span>
 
 <span class="sd">    Parameters</span>
@@ -381,7 +387,7 @@
 <span class="sd">        </span>
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
-<span class="sd">    &gt;&gt;&gt; import mf as mf</span>
+<span class="sd">    &gt;&gt;&gt; import ampartrafficking.rate_model as rm</span>
 <span class="sd">    &gt;&gt;&gt; import seaborn as sns</span>
 <span class="sd">    </span>
 <span class="sd">    Set parameters:</span>
@@ -393,7 +399,7 @@
 <span class="sd">    Plot:</span>
 <span class="sd">        </span>
 <span class="sd">    &gt;&gt;&gt; plt.figure(figsize=(4,3), dpi=150)</span>
-<span class="sd">    &gt;&gt;&gt; plt.plot(t/60,kexo0*mf.Stim_Resp(t,1,5,25,60), linewidth=2)</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(t/60,kexo0*rm.Stim_Resp(t,1,5,25,60), linewidth=2)</span>
 <span class="sd">    &gt;&gt;&gt; plt.xlabel(&#39;Time (min.)&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; plt.ylabel(&#39;$k_{exo}$ ($s^{-1}$)&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; sns.despine()</span>
@@ -409,7 +415,7 @@
 
 
 
-<div class="viewcode-block" id="DV"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.DV">[docs]</a><span class="k">def</span> <span class="nf">DV</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">V0</span><span class="p">,</span><span class="n">exocytosis</span><span class="p">):</span>
+<div class="viewcode-block" id="DV"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.DV">[docs]</a><span class="k">def</span> <span class="nf">DV</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">V0</span><span class="p">,</span><span class="n">exocytosis</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function describes the evolution of the spine volume during sLTP.</span>
 
 <span class="sd">    Parameters</span>
@@ -433,7 +439,7 @@
 <span class="sd">        </span>
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
-<span class="sd">    &gt;&gt;&gt; import mf as mf</span>
+<span class="sd">    &gt;&gt;&gt; import ampartrafficking.rate_model as rm</span>
 <span class="sd">    &gt;&gt;&gt; import seaborn as sns</span>
 <span class="sd">    </span>
 <span class="sd">    Set parameters:</span>
@@ -446,7 +452,7 @@
 <span class="sd">        </span>
 <span class="sd">    &gt;&gt;&gt; plt.figure(figsize=(4,3), dpi=150)</span>
 <span class="sd">    &gt;&gt;&gt; for V0 in spineVolumes:</span>
-<span class="sd">    &gt;&gt;&gt;     plt.plot(t/60,mf.DV(t,V0,exocytosis)*100, linewidth=2, label=&#39;$V_{spine}^0=$&#39;+&#39;{:1.2f} $\mu m^3$&#39;.format(V0))</span>
+<span class="sd">    &gt;&gt;&gt;     plt.plot(t/60,rm.DV(t,V0,exocytosis)*100, linewidth=2, label=&#39;$V_{spine}^0=$&#39;+&#39;{:1.2f} $\mu m^3$&#39;.format(V0))</span>
 <span class="sd">    &gt;&gt;&gt; plt.legend()</span>
 <span class="sd">    &gt;&gt;&gt; plt.xlabel(&#39;Time (min.)&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; plt.ylabel(&#39;$V_{spine}$ (%)&#39;)</span>
@@ -484,7 +490,7 @@
 
 
 
-<div class="viewcode-block" id="kUB0_"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.kUB0_">[docs]</a><span class="k">def</span> <span class="nf">kUB0_</span><span class="p">(</span><span class="n">Init</span><span class="p">,</span><span class="n">kBU</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">Aspine</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">):</span>
+<div class="viewcode-block" id="kUB0_"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.kUB0_">[docs]</a><span class="k">def</span> <span class="nf">kUB0_</span><span class="p">(</span><span class="n">Init</span><span class="p">,</span><span class="n">kBU</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">Aspine</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the receptor binding rate at baseline, which is calculated from the fixed point equation of the AMPAR trafficking model.</span>
 
 <span class="sd">    Parameters</span>
@@ -513,7 +519,7 @@
                     
     <span class="k">return</span> <span class="n">kUB0</span></div>
 
-<div class="viewcode-block" id="kendo_"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.kendo_">[docs]</a><span class="k">def</span> <span class="nf">kendo_</span><span class="p">(</span><span class="n">Init</span><span class="p">,</span><span class="n">kexo0</span><span class="p">,</span><span class="n">kin</span><span class="p">,</span><span class="n">kout</span><span class="p">,</span><span class="n">Aspine</span><span class="p">):</span>
+<div class="viewcode-block" id="kendo_"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.kendo_">[docs]</a><span class="k">def</span> <span class="nf">kendo_</span><span class="p">(</span><span class="n">Init</span><span class="p">,</span><span class="n">kexo0</span><span class="p">,</span><span class="n">kin</span><span class="p">,</span><span class="n">kout</span><span class="p">,</span><span class="n">Aspine</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the receptor endocytosis rate, which is calculated from the fixed point equation of the AMPAR trafficking model.</span>
 
 <span class="sd">    Parameters</span>
@@ -537,7 +543,7 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">kexo0</span><span class="o">*</span><span class="n">Init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">kin</span><span class="p">)</span><span class="o">*</span><span class="n">Aspine</span><span class="o">/</span><span class="n">Init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">kout</span></div>
 
 
-<div class="viewcode-block" id="SexoFP_"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.SexoFP_">[docs]</a><span class="k">def</span> <span class="nf">SexoFP_</span><span class="p">(</span><span class="n">kin_RE</span><span class="p">,</span><span class="n">kout_RE</span><span class="p">,</span><span class="n">Vspine</span><span class="p">):</span>
+<div class="viewcode-block" id="SexoFP_"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.SexoFP_">[docs]</a><span class="k">def</span> <span class="nf">SexoFP_</span><span class="p">(</span><span class="n">kin_RE</span><span class="p">,</span><span class="n">kout_RE</span><span class="p">,</span><span class="n">Vspine</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the fixed point of the exocytosis event size Sexo, i.e. the number of AMPARs delivered to the spine membrane during one exocytosis event.</span>
 
 <span class="sd">    Parameters</span>
@@ -558,7 +564,7 @@
     <span class="k">return</span> <span class="n">kin_RE</span><span class="o">/</span><span class="n">kout_RE</span><span class="o">*</span><span class="n">Vspine</span></div>
     
 
-<div class="viewcode-block" id="UFP_"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.UFP_">[docs]</a><span class="k">def</span> <span class="nf">UFP_</span><span class="p">(</span><span class="n">kexo</span><span class="p">,</span><span class="n">Sexo</span><span class="p">,</span><span class="n">kendo</span><span class="p">,</span><span class="n">kin</span><span class="p">,</span><span class="n">kout</span><span class="p">,</span><span class="n">Aspine</span><span class="p">):</span>
+<div class="viewcode-block" id="UFP_"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.UFP_">[docs]</a><span class="k">def</span> <span class="nf">UFP_</span><span class="p">(</span><span class="n">kexo</span><span class="p">,</span><span class="n">Sexo</span><span class="p">,</span><span class="n">kendo</span><span class="p">,</span><span class="n">kin</span><span class="p">,</span><span class="n">kout</span><span class="p">,</span><span class="n">Aspine</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the fixed point of the mobile receptor pool.</span>
 
 <span class="sd">    Parameters</span>
@@ -585,7 +591,7 @@
     <span class="k">return</span> <span class="n">Aspine</span><span class="o">*</span><span class="p">(</span><span class="n">kexo</span><span class="o">*</span><span class="n">Sexo</span><span class="o">+</span><span class="n">kin</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">kendo</span><span class="o">+</span><span class="n">kout</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="BFP_"><a class="viewcode-back" href="../../index.html#ampartrafficking.rate_model.BFP_">[docs]</a><span class="k">def</span> <span class="nf">BFP_</span><span class="p">(</span><span class="n">UFP</span><span class="p">,</span><span class="n">kUB</span><span class="p">,</span><span class="n">kBU</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">Aspine</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">):</span>
+<div class="viewcode-block" id="BFP_"><a class="viewcode-back" href="../../code.html#ampartrafficking.rate_model.BFP_">[docs]</a><span class="k">def</span> <span class="nf">BFP_</span><span class="p">(</span><span class="n">UFP</span><span class="p">,</span><span class="n">kUB</span><span class="p">,</span><span class="n">kBU</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">Aspine</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the fixed point of the bound receptor pool.</span>
 
 <span class="sd">    Parameters</span>

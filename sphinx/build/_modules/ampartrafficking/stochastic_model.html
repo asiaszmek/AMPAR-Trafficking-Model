@@ -13,6 +13,7 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
 
   
   
@@ -30,6 +31,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -80,8 +82,12 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html">Code documentation</a></li>
+</ul>
+
             
           
         </div>
@@ -155,7 +161,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<div class="viewcode-block" id="nearestNeighbours"><a class="viewcode-back" href="../../index.html#ampartrafficking.stochastic_model.nearestNeighbours">[docs]</a><span class="k">def</span> <span class="nf">nearestNeighbours</span><span class="p">(</span><span class="n">PSD</span><span class="p">):</span>
+<div class="viewcode-block" id="nearestNeighbours"><a class="viewcode-back" href="../../code.html#ampartrafficking.stochastic_model.nearestNeighbours">[docs]</a><span class="k">def</span> <span class="nf">nearestNeighbours</span><span class="p">(</span><span class="n">PSD</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the number of nearest neighbours on a grid.</span>
 
 <span class="sd">    Parameters</span>
@@ -175,7 +181,7 @@
 <span class="sd">        </span>
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
-<span class="sd">    &gt;&gt;&gt; import sm as sm</span>
+<span class="sd">    &gt;&gt;&gt; import ampartrafficking.stochastic_model as sm</span>
 <span class="sd">    </span>
 <span class="sd">    Create and populate grid and calculate nearest neighbour matrix:</span>
 
@@ -230,7 +236,7 @@
 
 
 
-<div class="viewcode-block" id="kBUcoop"><a class="viewcode-back" href="../../index.html#ampartrafficking.stochastic_model.kBUcoop">[docs]</a><span class="k">def</span> <span class="nf">kBUcoop</span><span class="p">(</span><span class="n">kBU</span><span class="p">,</span> <span class="n">NN</span><span class="p">,</span> <span class="n">PSD</span><span class="p">,</span> <span class="n">typeID</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<div class="viewcode-block" id="kBUcoop"><a class="viewcode-back" href="../../code.html#ampartrafficking.stochastic_model.kBUcoop">[docs]</a><span class="k">def</span> <span class="nf">kBUcoop</span><span class="p">(</span><span class="n">kBU</span><span class="p">,</span> <span class="n">NN</span><span class="p">,</span> <span class="n">PSD</span><span class="p">,</span> <span class="n">typeID</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     
     <span class="sd">&quot;&quot;&quot;Returns the cooperative unbinding rate per bound receptor.</span>
 
@@ -260,7 +266,7 @@
 <span class="sd">        </span>
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
-<span class="sd">    &gt;&gt;&gt; import sm as sm</span>
+<span class="sd">    &gt;&gt;&gt; import ampartrafficking.stochastic_model as sm</span>
 <span class="sd">    </span>
 <span class="sd">    Create and populate grid and calculate nearest neighbour matrix:</span>
 
@@ -322,7 +328,7 @@
 
 
 
-<div class="viewcode-block" id="kUBcoop"><a class="viewcode-back" href="../../index.html#ampartrafficking.stochastic_model.kUBcoop">[docs]</a><span class="k">def</span> <span class="nf">kUBcoop</span><span class="p">(</span><span class="n">kUB</span><span class="p">,</span> <span class="n">NN</span><span class="p">,</span> <span class="n">PSD</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
+<div class="viewcode-block" id="kUBcoop"><a class="viewcode-back" href="../../code.html#ampartrafficking.stochastic_model.kUBcoop">[docs]</a><span class="k">def</span> <span class="nf">kUBcoop</span><span class="p">(</span><span class="n">kUB</span><span class="p">,</span> <span class="n">NN</span><span class="p">,</span> <span class="n">PSD</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
     
     <span class="sd">&quot;&quot;&quot;Returns the cooperative binding rate per mobile receptor.</span>
 
@@ -350,7 +356,7 @@
 <span class="sd">        </span>
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
-<span class="sd">    &gt;&gt;&gt; import sm as sm</span>
+<span class="sd">    &gt;&gt;&gt; import ampartrafficking.stochastic_model as sm</span>
 <span class="sd">    </span>
 <span class="sd">    Create and populate grid and calculate nearest neighbour matrix:</span>
 
@@ -412,7 +418,7 @@
 
 
 
-<div class="viewcode-block" id="probabilityEval"><a class="viewcode-back" href="../../index.html#ampartrafficking.stochastic_model.probabilityEval">[docs]</a><span class="k">def</span> <span class="nf">probabilityEval</span><span class="p">(</span><span class="n">Mub</span><span class="p">,</span><span class="n">Mbu</span><span class="p">,</span><span class="n">PSD</span><span class="p">,</span><span class="n">ID_basal</span><span class="p">,</span><span class="n">Mub_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">Mbu_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">ID_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="probabilityEval"><a class="viewcode-back" href="../../code.html#ampartrafficking.stochastic_model.probabilityEval">[docs]</a><span class="k">def</span> <span class="nf">probabilityEval</span><span class="p">(</span><span class="n">Mub</span><span class="p">,</span><span class="n">Mbu</span><span class="p">,</span><span class="n">PSD</span><span class="p">,</span><span class="n">ID_basal</span><span class="p">,</span><span class="n">Mub_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">Mbu_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">ID_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     
     <span class="sd">&quot;&quot;&quot;Returns the updated PSD Matrix and the corresponding number of receptors that got bound and unbound. To types, &quot;basal&quot; and &quot;not bleached&quot; can be considered, which is necessary when simulation FRAP.</span>
 
@@ -446,7 +452,7 @@
 <span class="sd">        </span>
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
-<span class="sd">    &gt;&gt;&gt; import sm as sm</span>
+<span class="sd">    &gt;&gt;&gt; import ampartrafficking.stochastic_model as sm</span>
 <span class="sd">    </span>
 <span class="sd">    Set parameters:</span>
 
@@ -489,7 +495,7 @@
 <span class="sd">    &gt;&gt;&gt; Mbu_notBleached=sm.kBUcoop(kBU, NN, PSD, ID_notBleached)*dt</span>
 <span class="sd">    &gt;&gt;&gt; Mub_notBleached=sm.kUBcoop(kUB*U_notBleached, NN, PSD)*dt</span>
 <span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; PSD,dBoff,dBon,dBoff_notBleached,dBon_notBleached=sm.probabilityEval(Mub,Mbu,Mub_notBleached,Mbu_notBleached,PSD)</span>
+<span class="sd">    &gt;&gt;&gt; PSD,dBoff,dBon,dBoff_notBleached,dBon_notBleached=sm.probabilityEval(Mub,Mbu,PSD,ID_basal,Mub_notBleached,Mbu_notBleached,ID_notBleached)</span>
 
 <span class="sd">    Plot PSD:</span>
 <span class="sd">        </span>
@@ -553,7 +559,7 @@
 
 
 
-<div class="viewcode-block" id="update_mobilePool"><a class="viewcode-back" href="../../index.html#ampartrafficking.stochastic_model.update_mobilePool">[docs]</a><span class="k">def</span> <span class="nf">update_mobilePool</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="n">pin</span><span class="p">,</span><span class="n">pout</span><span class="p">,</span><span class="n">dBoff</span><span class="p">,</span><span class="n">dBon</span><span class="p">,</span> <span class="n">U_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pin_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pout_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">dBoff_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">dBon_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="update_mobilePool"><a class="viewcode-back" href="../../code.html#ampartrafficking.stochastic_model.update_mobilePool">[docs]</a><span class="k">def</span> <span class="nf">update_mobilePool</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="n">pin</span><span class="p">,</span><span class="n">pout</span><span class="p">,</span><span class="n">dBoff</span><span class="p">,</span><span class="n">dBon</span><span class="p">,</span> <span class="n">U_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pin_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pout_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">dBoff_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">dBon_notBleached</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;Updates the value for the mobile receptor pool. When simulating FRAP, a second type &quot;not bleached&quot; is considered.</span>
 
@@ -615,7 +621,7 @@
         
     
     
-<div class="viewcode-block" id="calcTimeStep"><a class="viewcode-back" href="../../index.html#ampartrafficking.stochastic_model.calcTimeStep">[docs]</a><span class="k">def</span> <span class="nf">calcTimeStep</span><span class="p">(</span><span class="n">UFP_0</span><span class="p">,</span><span class="n">A_spine</span><span class="p">,</span><span class="n">kUB</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">kBU</span><span class="p">,</span><span class="n">kout</span><span class="p">,</span><span class="n">kin</span><span class="p">):</span>
+<div class="viewcode-block" id="calcTimeStep"><a class="viewcode-back" href="../../code.html#ampartrafficking.stochastic_model.calcTimeStep">[docs]</a><span class="k">def</span> <span class="nf">calcTimeStep</span><span class="p">(</span><span class="n">UFP_0</span><span class="p">,</span><span class="n">A_spine</span><span class="p">,</span><span class="n">kUB</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">kBU</span><span class="p">,</span><span class="n">kout</span><span class="p">,</span><span class="n">kin</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;Returns integration time step dt. By default simulations are carried out at dt=0.5s. If parameter choices require a smaller time step, dt is set to 0.25s. If dt is still too large, the simulation is cancelled and an error message is displayed. In this case dt needs to be set manually.</span>
 

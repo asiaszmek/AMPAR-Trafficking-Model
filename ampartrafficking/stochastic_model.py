@@ -29,7 +29,7 @@ def nearestNeighbours(PSD):
         
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> import sm as sm
+    >>> import ampartrafficking.stochastic_model as sm
     
     Create and populate grid and calculate nearest neighbour matrix:
 
@@ -114,7 +114,7 @@ def kBUcoop(kBU, NN, PSD, typeID, beta=1.0):
         
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> import sm as sm
+    >>> import ampartrafficking.stochastic_model as sm
     
     Create and populate grid and calculate nearest neighbour matrix:
 
@@ -204,7 +204,7 @@ def kUBcoop(kUB, NN, PSD, alpha=16):
         
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> import sm as sm
+    >>> import ampartrafficking.stochastic_model as sm
     
     Create and populate grid and calculate nearest neighbour matrix:
 
@@ -300,7 +300,7 @@ def probabilityEval(Mub,Mbu,PSD,ID_basal,Mub_notBleached=None,Mbu_notBleached=No
         
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> import sm as sm
+    >>> import ampartrafficking.stochastic_model as sm
     
     Set parameters:
 
@@ -343,7 +343,7 @@ def probabilityEval(Mub,Mbu,PSD,ID_basal,Mub_notBleached=None,Mbu_notBleached=No
     >>> Mbu_notBleached=sm.kBUcoop(kBU, NN, PSD, ID_notBleached)*dt
     >>> Mub_notBleached=sm.kUBcoop(kUB*U_notBleached, NN, PSD)*dt
     >>>
-    >>> PSD,dBoff,dBon,dBoff_notBleached,dBon_notBleached=sm.probabilityEval(Mub,Mbu,Mub_notBleached,Mbu_notBleached,PSD)
+    >>> PSD,dBoff,dBon,dBoff_notBleached,dBon_notBleached=sm.probabilityEval(Mub,Mbu,PSD,ID_basal,Mub_notBleached,Mbu_notBleached,ID_notBleached)
 
     Plot PSD:
         

@@ -235,7 +235,7 @@ def Stim_Resp(t,a0,a,b,c):
         
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> import mf as mf
+    >>> import ampartrafficking.rate_model as rm
     >>> import seaborn as sns
     
     Set parameters:
@@ -247,7 +247,7 @@ def Stim_Resp(t,a0,a,b,c):
     Plot:
         
     >>> plt.figure(figsize=(4,3), dpi=150)
-    >>> plt.plot(t/60,kexo0*mf.Stim_Resp(t,1,5,25,60), linewidth=2)
+    >>> plt.plot(t/60,kexo0*rm.Stim_Resp(t,1,5,25,60), linewidth=2)
     >>> plt.xlabel('Time (min.)')
     >>> plt.ylabel('$k_{exo}$ ($s^{-1}$)')
     >>> sns.despine()
@@ -287,7 +287,7 @@ def DV(t,V0,exocytosis):
         
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> import mf as mf
+    >>> import ampartrafficking.rate_model as rm
     >>> import seaborn as sns
     
     Set parameters:
@@ -300,7 +300,7 @@ def DV(t,V0,exocytosis):
         
     >>> plt.figure(figsize=(4,3), dpi=150)
     >>> for V0 in spineVolumes:
-    >>>     plt.plot(t/60,mf.DV(t,V0,exocytosis)*100, linewidth=2, label='$V_{spine}^0=$'+'{:1.2f} $\mu m^3$'.format(V0))
+    >>>     plt.plot(t/60,rm.DV(t,V0,exocytosis)*100, linewidth=2, label='$V_{spine}^0=$'+'{:1.2f} $\mu m^3$'.format(V0))
     >>> plt.legend()
     >>> plt.xlabel('Time (min.)')
     >>> plt.ylabel('$V_{spine}$ (%)')

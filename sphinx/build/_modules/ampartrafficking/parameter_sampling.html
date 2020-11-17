@@ -13,6 +13,7 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
 
   
   
@@ -30,6 +31,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -80,8 +82,12 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html">Code documentation</a></li>
+</ul>
+
             
           
         </div>
@@ -160,7 +166,7 @@
 
 <span class="c1">#%%</span>
 
-<div class="viewcode-block" id="parameterSampling"><a class="viewcode-back" href="../../index.html#ampartrafficking.parameter_sampling.parameterSampling">[docs]</a><span class="k">def</span> <span class="nf">parameterSampling</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Init</span><span class="p">,</span><span class="n">sLTP</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">kin</span><span class="p">,</span><span class="n">kout</span><span class="p">,</span><span class="n">Trials</span><span class="p">,</span> <span class="n">kBU_max</span><span class="p">,</span><span class="n">aUB_max</span><span class="p">,</span><span class="n">TUB_max</span><span class="p">,</span><span class="n">kexo_max</span><span class="p">,</span><span class="n">aexo_max</span><span class="p">,</span><span class="n">Texo_max</span><span class="p">):</span>
+<div class="viewcode-block" id="parameterSampling"><a class="viewcode-back" href="../../code.html#ampartrafficking.parameter_sampling.parameterSampling">[docs]</a><span class="k">def</span> <span class="nf">parameterSampling</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Init</span><span class="p">,</span><span class="n">sLTP</span><span class="p">,</span><span class="n">Cooperativity</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">kin</span><span class="p">,</span><span class="n">kout</span><span class="p">,</span><span class="n">Trials</span><span class="p">,</span> <span class="n">kBU_max</span><span class="p">,</span><span class="n">aUB_max</span><span class="p">,</span><span class="n">TUB_max</span><span class="p">,</span><span class="n">kexo_max</span><span class="p">,</span><span class="n">aexo_max</span><span class="p">,</span><span class="n">Texo_max</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;Returns evolution over time of bound AMPARs for normal E-LTP and LTP with exocytosis blockage for various Trials. Parameter values for exocytosis event, receptor binding and unbinding rate are drawn randomly for each Trial. Also, evolution over time of mobile receptors, binding rate and exocytosis event rate and spine area are returned as well as values for the baseline exocytosis event rate kexo0, the factor of change in exocytosis event rate amplitide during LTP-induction aexo and amplitude decay time constant Texo are returned for each Trial.</span>
 <span class="sd">    </span>
@@ -310,7 +316,7 @@
     <span class="k">return</span> <span class="n">B_Tr</span><span class="p">,</span><span class="n">B_ne_Tr</span><span class="p">,</span> <span class="n">U_Tr</span><span class="p">,</span> <span class="n">kUB_Tr</span><span class="p">,</span><span class="n">kexo_Tr</span><span class="p">,</span><span class="n">Aspine_Tr</span><span class="p">,</span> <span class="n">kexo0_Tr</span><span class="p">,</span><span class="n">aexo_Tr</span><span class="p">,</span><span class="n">Texo_Tr</span></div>
 
 
-<div class="viewcode-block" id="ELTP"><a class="viewcode-back" href="../../index.html#ampartrafficking.parameter_sampling.ELTP">[docs]</a><span class="k">def</span> <span class="nf">ELTP</span><span class="p">(</span><span class="n">Time</span><span class="p">):</span>
+<div class="viewcode-block" id="ELTP"><a class="viewcode-back" href="../../code.html#ampartrafficking.parameter_sampling.ELTP">[docs]</a><span class="k">def</span> <span class="nf">ELTP</span><span class="p">(</span><span class="n">Time</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns time evolution of EPSPs during E-LTP in % of baseline. The function has been fitted to data from Barco et al. 2002.</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>
@@ -326,7 +332,7 @@
     <span class="k">return</span> <span class="n">rm</span><span class="o">.</span><span class="n">Stim_Resp</span><span class="p">(</span><span class="n">Time</span><span class="p">,</span><span class="mf">0.98</span><span class="p">,</span><span class="mf">2.53</span><span class="p">,</span><span class="mf">82.13</span><span class="p">,</span><span class="mf">2.35</span><span class="o">*</span><span class="mi">10</span><span class="o">**-</span><span class="mi">7</span><span class="p">)</span><span class="o">+</span><span class="n">rm</span><span class="o">.</span><span class="n">Stim_Resp</span><span class="p">(</span><span class="n">Time</span><span class="p">,</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span><span class="mf">0.97</span><span class="p">,</span><span class="mf">3445.37</span><span class="p">,</span><span class="mf">128.40</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="LTPnoExo"><a class="viewcode-back" href="../../index.html#ampartrafficking.parameter_sampling.LTPnoExo">[docs]</a><span class="k">def</span> <span class="nf">LTPnoExo</span><span class="p">(</span><span class="n">Time</span><span class="p">):</span>
+<div class="viewcode-block" id="LTPnoExo"><a class="viewcode-back" href="../../code.html#ampartrafficking.parameter_sampling.LTPnoExo">[docs]</a><span class="k">def</span> <span class="nf">LTPnoExo</span><span class="p">(</span><span class="n">Time</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns time evolution of EPSPs during LTP with exocytosis blockage in % of baseline. The function has been fitted to data from Penn et al. 2017.</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>
@@ -342,7 +348,7 @@
     <span class="k">return</span> <span class="n">rm</span><span class="o">.</span><span class="n">Stim_Resp</span><span class="p">(</span><span class="n">Time</span><span class="p">,</span><span class="mf">0.84</span><span class="p">,</span><span class="mf">1.85</span><span class="p">,</span><span class="mf">41.62</span><span class="p">,</span><span class="mf">18.12</span><span class="p">)</span><span class="o">+</span><span class="n">rm</span><span class="o">.</span><span class="n">Stim_Resp</span><span class="p">(</span><span class="n">Time</span><span class="p">,</span><span class="o">-</span><span class="mf">0.16</span><span class="p">,</span><span class="mf">0.57</span><span class="p">,</span><span class="mf">605.16</span><span class="p">,</span><span class="mf">41.62</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Matching"><a class="viewcode-back" href="../../index.html#ampartrafficking.parameter_sampling.Matching">[docs]</a><span class="k">def</span> <span class="nf">Matching</span><span class="p">(</span><span class="n">B_Basal</span><span class="p">,</span><span class="n">B_nE</span><span class="p">,</span><span class="n">Trials</span><span class="p">,</span><span class="n">Time</span><span class="p">,</span><span class="n">BFP</span><span class="p">):</span>
+<div class="viewcode-block" id="Matching"><a class="viewcode-back" href="../../code.html#ampartrafficking.parameter_sampling.Matching">[docs]</a><span class="k">def</span> <span class="nf">Matching</span><span class="p">(</span><span class="n">B_Basal</span><span class="p">,</span><span class="n">B_nE</span><span class="p">,</span><span class="n">Trials</span><span class="p">,</span><span class="n">Time</span><span class="p">,</span><span class="n">BFP</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the indices and distance measure for the 0.5% of Trials that best match with experimental data from Barco et al. 2002 and Penn et al. 2017.</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>

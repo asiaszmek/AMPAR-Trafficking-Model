@@ -5,24 +5,16 @@
 
 .. sphinx-build -b html C:\Users\Moritz\ownCloud\PlosCB\AMPAR-Model-Synapse\sphinx\source C:\Users\Moritz\ownCloud\PlosCB\AMPAR-Model-Synapse\sphinx\build
 
-Welcome to the AMPAR-Trafficking-Model documentation!
-=====================================================
+AMPAR-trafficking-model documentation
+=====================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-.. automodule:: ampartrafficking.rate_model
-   :members:
+   introduction
+   code
 
-.. automodule:: ampartrafficking.parameter_sampling
-   :members:
-
-.. automodule:: ampartrafficking.stochastic_model
-   :members:
-
-.. automodule:: ampartrafficking.frap
-   :members:
 
 
 Indices and tables
