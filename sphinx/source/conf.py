@@ -58,3 +58,5 @@ html_add_permalinks = ''
 # Add custom css stylsheet.
 def setup(app):
     app.add_stylesheet('css/custom.css')
+
+autodoc_member_order = 'bysource'

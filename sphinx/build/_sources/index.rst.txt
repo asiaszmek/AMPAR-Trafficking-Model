@@ -8,6 +8,8 @@
 AMPAR-trafficking-model documentation
 =====================================
 
+Go back to the GitHub repository: `AMPAR-Trafficking-Model <https://github.com/MoritzB90/AMPAR-Trafficking-Model>`_
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
